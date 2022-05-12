@@ -34,9 +34,7 @@ import { ref } from "vue";
   }
 })(window);
 
-console.log(import.meta.env);
-
-const apiKey = "YOUR_API_KEY",
+const apiKey = import.meta.env.VITE_API_KEY,
   urlBase = "https://api.openweathermap.org/data/2.5/",
   query = ref(""),
   weather = ref({});
@@ -90,7 +88,7 @@ const dateBuilder = () => {
     <main class="h-screen">
       <div class="flex flex-col items-center bg-black h-full bg-opacity-10">
         <input
-          class="mt-10 bg-white bg-opacity-90 hover:bg-opacity-100 rounded text-lg w-11/12 p-2 outline-none"
+          class="mt-10 bg-white bg-opacity-90 hover:bg-opacity-100 rounded text-lg md:text-xl w-11/12 max-w-2xl p-2 md:p-3 outline-none"
           type="text"
           placeholder="Search"
           @keypress="fetchWeather"
@@ -98,23 +96,25 @@ const dateBuilder = () => {
         />
 
         <div
-          class="flex flex-col justify-start items-center w-full"
+          class="flex flex-col justify-start items-center w-full md:max-w-4xl"
           v-if="typeof weather.main != 'undefined'"
         >
-          <p class="text-2xl text-white mt-12">
+          <p class="text-2xl md:text-4xl text-white mt-12">
             {{ weather.name }}, {{ weather.sys.country }}
           </p>
 
-          <p class="text-xl text-white mt-4">{{ dateBuilder() }}</p>
+          <p class="text-xl md:text-2xl text-white mt-4">{{ dateBuilder() }}</p>
 
           <div
             id="temp_container"
-            class="flex items-center justify-center max-h-40 p-5 text-8xl text-white bg-white bg-opacity-40 rounded-lg w-2/4 mt-8"
+            class="flex items-center justify-center max-h-40 p-5 bg-white bg-opacity-40 rounded-lg w-2/4 mt-8"
           >
-            <p class="text-shadow">{{ Math.round(weather.main.temp) }}º</p>
+            <p class="text-shadow text-white text-8xl md:text-9xl">
+              {{ Math.round(weather.main.temp) }}º
+            </p>
           </div>
 
-          <p class="text-white mt-8 text-4xl">{{ weather.weather[0].main }}</p>
+          <p class="text-white mt-8 text-4xl md:text-7xl">{{ weather.weather[0].main }}</p>
         </div>
       </div>
     </main>
@@ -128,7 +128,7 @@ const dateBuilder = () => {
   background-image: url("@/assets/bg2.jpg");
   background-repeat: no-repeat;
   background-attachment: fixed;
-  background-position: top;
+  background-position: bottom;
   background-clip: padding-box;
   background-size: cover;
 }
